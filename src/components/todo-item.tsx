@@ -7,8 +7,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 
 import Card from "@material-ui/core/Card";
-import InputBase from '@material-ui/core/InputBase';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import InputBase from "@material-ui/core/InputBase";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 // Import interfaces
 import { TodoItemInterface } from "./../interfaces";
@@ -16,12 +16,12 @@ import { TodoItemInterface } from "./../interfaces";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     design: {
-      '& > *': {
+      "& > *": {
         margin: theme.spacing(1),
-        width: 200,
-      },
-    },
-  }),
+        width: 200
+      }
+    }
+  })
 );
 
 const MyDeleteOutlined = styled(DeleteOutlined)({
@@ -41,6 +41,16 @@ const MyCard = styled(Card)({
 // TodoItem component
 const TodoItem = (props: TodoItemInterface) => {
   const [edit, setEdit] = React.useState(true);
+  const [texting, setTexting] = React.useState(props.todo.text);
+
+  const startEdit = () => {
+    setEdit(!edit);
+    if (!edit) {
+      props.handleTodoUpdate(texting, props.todo.id);
+    }
+  };
+
+  const updateText = (e: any) => setTexting(e.target.value);
 
   return (
     <MyCard className="todo-item">
@@ -58,15 +68,15 @@ const TodoItem = (props: TodoItemInterface) => {
         {edit ? (
           <div>{props.todo.text}</div>
         ) : (
-          <InputBase className='design' fullWidth
+          <InputBase
+            className="design"
+            fullWidth
             defaultValue={props.todo.text}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              props.handleTodoUpdate(event, props.todo.id)
-            }
+            onChange={updateText}
           />
         )}
       </div>
-      <div className="item-edit" onClick={() => setEdit(!edit)}>
+      <div className="item-edit" onClick={startEdit}>
         {edit ? <MyEditIcon /> : <MyAssignmentTurnedInIcon />}
       </div>
 

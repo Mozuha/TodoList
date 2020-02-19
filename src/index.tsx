@@ -1,17 +1,17 @@
 // Import dependencies
-import * as React from 'react';
-import { render } from 'react-dom';
+import * as React from "react";
+import { render } from "react-dom";
 
 // Import components
-import TodoForm from './components/todo-form';
-import TodoList from './components/todo-list';
+import TodoForm from "./components/todo-form";
+import TodoList from "./components/todo-list";
 
 // Import interfaces
-import { TodoInterface } from './interfaces';
+import { TodoInterface } from "./interfaces";
 
 // Import styles
-import './styles/styles.css';
-import Logo from './logo.svg';
+import "./styles/styles.css";
+import Logo from "./logo.svg";
 
 //import App from './components/App'
 //import * as serviceWorker from './serviceWorker'
@@ -21,14 +21,14 @@ import Logo from './logo.svg';
 // Learn more about service workers: https://bit.ly/CRA-PWA
 //serviceWorker.unregister()
 
-import firebase from 'firebase';
-import 'firebase/firestore';
+import firebase from "firebase";
+import "firebase/firestore";
 
 var firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
   databaseURL: process.env.DATABASE_URL,
-  projectId: process.env.PROJECT_ID,
+  projectId: "todolist-ebad1",
   storageBucket: process.env.STORAGE_BUCKET,
   messagingSenderId: process.env.MESSAGING_SENDER_ID,
   appId: process.env.APP_ID
@@ -49,26 +49,29 @@ const TodoListApp = () => {
   // load the data from the database
   React.useEffect(() => {
     (async () => {
-      const resTodo = await db.collection('todoList').doc('todo').get();
+      const resTodo = await db
+        .collection("todoList")
+        .doc("todo")
+        .get();
       setTodos(resTodo.data()!.tasks);
       setIsLoading(false);
-    })()
-  }, [db])
+    })();
+  }, [db]);
 
   // update the data in the database
   React.useEffect(() => {
-    if(isChangedTodo) {
+    if (isChangedTodo) {
       (async () => {
-        setIsLoading(true)
-        const docRef = await db.collection('todoList').doc('todo');
-        docRef.update({ tasks: todos })
+        setIsLoading(true);
+        const docRef = await db.collection("todoList").doc("todo");
+        docRef.update({ tasks: todos });
         setIsLoading(false);
-      })()
+      })();
     }
-  }, [todos, isChangedTodo, db])
+  }, [todos, isChangedTodo, db]);
 
   // Creating new todo item
-  const handleTodoCreate = async(todo: TodoInterface) => {
+  const handleTodoCreate = async (todo: TodoInterface) => {
     // Prepare new todos state
     const newTodosState: TodoInterface[] = [...todos];
 
@@ -81,16 +84,12 @@ const TodoListApp = () => {
   };
 
   // Update existing todo item
-  const handleTodoUpdate = async(
-    event: React.ChangeEvent<HTMLInputElement>,
-    id: string
-  ) => {
+  const handleTodoUpdate = async (text: string, id: string) => {
     // Prepare new todos state
     const newTodosState: TodoInterface[] = [...todos];
 
     // Find correct todo item to update
-    newTodosState.find((todo: TodoInterface) => todo.id === id)!.text =
-      event.target.value;
+    newTodosState.find((todo: TodoInterface) => todo.id === id)!.text = text;
 
     // Update todos state
     setTodos(newTodosState);
@@ -107,7 +106,7 @@ const TodoListApp = () => {
 
     // Update todos state
     setTodos(newTodosState);
-    
+
     setIsChangedTodo(true);
   };
 
@@ -132,34 +131,34 @@ const TodoListApp = () => {
   // Check if todo item has title
   const handleTodoBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length === 0) {
-      event.target.classList.add('todo-input-error');
+      event.target.classList.add("todo-input-error");
     } else {
-      event.target.classList.remove('todo-input-error');
+      event.target.classList.remove("todo-input-error");
     }
   };
 
   return (
-    <div className='todo-list-app'>
+    <div className="todo-list-app">
       <h1>Todo App</h1>
       {/* Todo from component */}
       <TodoForm todos={todos} handleTodoCreate={handleTodoCreate} />
 
-      {isLoading ? 
-      <img className='logo' src={Logo} alt='' />
-      :
-      // Todo list component
-      <TodoList
-        todos={todos}
-        handleTodoUpdate={handleTodoUpdate}
-        handleTodoRemove={handleTodoRemove}
-        handleTodoComplete={handleTodoComplete}
-        handleTodoBlur={handleTodoBlur}
-      />
-      }
+      {isLoading ? (
+        <img className="logo" src={Logo} alt="" />
+      ) : (
+        // Todo list component
+        <TodoList
+          todos={todos}
+          handleTodoUpdate={handleTodoUpdate}
+          handleTodoRemove={handleTodoRemove}
+          handleTodoComplete={handleTodoComplete}
+          handleTodoBlur={handleTodoBlur}
+        />
+      )}
     </div>
   );
 };
 
 // Render the App in the DOM
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 render(<TodoListApp />, rootElement);
