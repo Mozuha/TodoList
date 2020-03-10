@@ -2,20 +2,25 @@
 import * as React from "react";
 import shortid from "shortid";
 import Button from "@material-ui/core/Button";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 // Import interfaces
 import { TodoInterface, TodoFormInterface } from "./../interfaces";
 
+
+/********************************************************************************************************/
+
+
 // Todo form component
 const TodoForm = (props: TodoFormInterface) => {
   // Create ref for form input
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
   // Create form state
   const [formState, setFormState] = React.useState("");
 
   // Handle todo input change
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Update form state with the text from input
     setFormState(event.target.value);
   };
@@ -26,7 +31,8 @@ const TodoForm = (props: TodoFormInterface) => {
     const newTodo: TodoInterface = {
       id: shortid.generate(),
       text: formState,
-      isCompleted: false
+      isCompleted: false,
+      isCode: false
     };
 
     // Create new todo item
@@ -46,7 +52,8 @@ const TodoForm = (props: TodoFormInterface) => {
       const newTodo: TodoInterface = {
         id: shortid.generate(),
         text: formState,
-        isCompleted: false
+        isCompleted: false,
+        isCode: false
       };
 
       // Create new todo item
@@ -59,18 +66,47 @@ const TodoForm = (props: TodoFormInterface) => {
     }
   };
 
+  const handleCodeInputButton = () => {
+    // Prepare new todo object
+    const newTodo: TodoInterface = {
+      id: shortid.generate(),
+      text: formState,
+      isCompleted: false,
+      isCode: true
+    };
+
+    // Create new todo item
+    props.handleTodoCreate(newTodo);
+
+    // Reset the input field
+    if (inputRef && inputRef.current) {
+      inputRef.current.value = "";
+    }
+  };
+
   return (
-    <div className="todo-form">
-      <input
+    <div className='todo-form'>
+      <TextareaAutosize
+        className='textarea'
+        rowsMin={3}
+        rowsMax={3}
         ref={inputRef}
-        type="text"
-        placeholder="Enter task"
+        placeholder='Enter task'
         onChange={event => handleInputChange(event)}
-        onKeyPress={event => handleInputEnter(event)}
+        // onKeyPress={event => handleInputEnter(event)}
       />
-      <Button onClick={() => handleInputButton()}>Add</Button>
+      <Button className='button' onClick={() => handleInputButton()}>
+        Add
+      </Button>
+      <Button onClick={() => handleCodeInputButton()}>
+        Code
+      </Button>
     </div>
   );
 };
 
 export default TodoForm;
+
+
+/********************************************************************************************************/
+

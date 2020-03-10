@@ -12,6 +12,7 @@ import { TodoInterface } from "./interfaces";
 // Import styles
 import "./styles/styles.css";
 import Logo from "./logo.svg";
+import styled from "styled-components";
 
 //import App from './components/App'
 //import * as serviceWorker from './serviceWorker'
@@ -23,6 +24,8 @@ import Logo from "./logo.svg";
 
 import firebase from "firebase";
 import "firebase/firestore";
+
+/********************************************************************************************************/
 
 var firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -138,13 +141,13 @@ const TodoListApp = () => {
   };
 
   return (
-    <div className="todo-list-app">
-      <h1>Todo App</h1>
+    <Body className='todo-list-app'>
+      <h1 className='title'>Todo App</h1>
       {/* Todo from component */}
       <TodoForm todos={todos} handleTodoCreate={handleTodoCreate} />
 
       {isLoading ? (
-        <img className="logo" src={Logo} alt="" />
+        <img className='loading' src={Logo} alt='Loading' />
       ) : (
         // Todo list component
         <TodoList
@@ -155,9 +158,25 @@ const TodoListApp = () => {
           handleTodoBlur={handleTodoBlur}
         />
       )}
-    </div>
+    </Body>
   );
 };
+
+/********************************************************************************************************/
+
+const Body = styled.body`
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #caf1f8; //b3caf5
+  font-size: 15px;
+  color: #414040;
+`;
+
+/********************************************************************************************************/
 
 // Render the App in the DOM
 const rootElement = document.getElementById("root");

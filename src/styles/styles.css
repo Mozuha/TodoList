@@ -1,16 +1,14 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #b3caf5;
+::-webkit-scrollbar {
+  width: 10px;
+  height: 3px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+::-webkit-scrollbar-track {
+  background: #ebebeb;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
 }
 
 /* Default styles*/
@@ -25,15 +23,6 @@ html {
 }
 
 #root,
-body {
-  min-height: 100vh;
-}
-
-body {
-  margin: 0;
-}
-
-#root,
 .todo-list-app {
   display: flex;
   flex-flow: column nowrap;
@@ -42,6 +31,10 @@ body {
 #root {
   align-items: center;
   width: 100%;
+}
+
+.title {
+  font-size: 2.5em;
 }
 
 .subtitle {
@@ -72,38 +65,47 @@ body {
   text-align: center;
 }
 
+.todo-form {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
 /* Todo form styles */
-.todo-form input,
+.todo-form textarea,
 .todo-item {
   border: 1px solid #ececec;
 }
 
-.todo-form input {
+.todo-form textarea {
   padding: 0 14px;
   width: 40%;
   height: 48px;
+  margin-right: 10px;
   transition: 0.25s border ease-in-out;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.todo-form input:focus {
+.todo-form textarea:focus {
   outline: 0;
   border: 1px solid #3498db;
 }
 
 .todo-form button {
   padding: 0 14px;
-  width: 10%;
+  width: 8%;
   height: 48px;
+  margin-right: 15px;
   transition: 0.25s border ease-in-out;
   color: #fff;
-  background-color: #f5b3ca;
+  background-color: #f8cada;
   border-radius: 3px;
   font-size: 1.2em;
   text-align: center;
 }
 
 .todo-form button:hover {
-  background-color: #f5b3d5;
+  background-color: #f5b3ca;
 }
 
 /* Todo list styles */
@@ -125,6 +127,12 @@ body {
   flex-flow: row nowrap;
   align-items: center;
   padding: 8px;
+}
+
+.todo-item .code {
+  text-align: left;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 .todo-form + .todo-list ul .todo-item {
@@ -162,7 +170,7 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 1px solid #ececec;
+  border: 1px solid #1abc9c;
   transition: 0.25s all ease-in-out;
 }
 
@@ -194,13 +202,14 @@ body {
   color: #111;
 }
 
-.logo {
+.loading {
   align-items: center;
-  height: 30vmin;
+  margin-top: 100px;
+  height: 50vmin;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .logo {
+  .loading {
     animation: App-logo-spin infinite 20s linear;
   }
 }

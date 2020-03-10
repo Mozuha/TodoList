@@ -7,13 +7,17 @@ import TodoItem from "./todo-item";
 // Import interfaces
 import { TodoListInterface } from "./../interfaces";
 
+
+/********************************************************************************************************/
+
+
 // TodoList component
 const TodoList = (props: TodoListInterface) => {
   return (
-    <div className="block">
-      <div className="todo-list">
+    <div className='block'>
+      <div className='todo-list'>
         <ul>
-          <div className="subtitle">In-Progress</div>
+          <div className='subtitle'>In-Progress</div>
           {props.todos
             .filter(todo => !todo.isCompleted)
             .map(todo => (
@@ -29,8 +33,8 @@ const TodoList = (props: TodoListInterface) => {
             ))}
         </ul>
       </div>
-      <div className="completed-list">
-        <div className="subtitle">Completed</div>
+      <div className='completed-list'>
+        <div className='subtitle'>Completed</div>
         <ul>
           {props.todos
             .filter(todo => todo.isCompleted)
@@ -52,3 +56,7 @@ const TodoList = (props: TodoListInterface) => {
 };
 
 export default TodoList;
+
+
+/********************************************************************************************************/
+
