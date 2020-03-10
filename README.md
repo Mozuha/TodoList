@@ -1,5 +1,5 @@
 ## Overview
-Simple Todo app with React and Typescript --> [Todo App](https://todolist-ebad1.firebaseapp.com/)
+### Simple Todo app with React and Typescript --> [Todo App](https://todolist-ebad1.firebaseapp.com/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 
